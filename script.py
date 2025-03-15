@@ -53,7 +53,7 @@ def get_chunk_data(vk, peer_id, start_message_id, offset, count):
     return items, -chunk_length, -1
 
 
-def collect_history(title, peer_id, token=TOKEN):
+def collect_history(title, peer_id, subject_dir="noname", token=TOKEN):
     """Collect history from messenger"""
     vk_session = vk_api.VkApi(token=token)
 
@@ -62,7 +62,10 @@ def collect_history(title, peer_id, token=TOKEN):
     fname = f"{title}_{datetime.date.today().strftime("%Y_%m_%d")}.txt"
     if not os.path.isdir(DATA_DIR):
         os.mkdir(DATA_DIR)
-    fpath = os.path.join(DATA_DIR, fname)
+    subject_dir_path = os.path.join(DATA_DIR, subject_dir)
+    if not os.path.isdir(subject_dir_path):
+        os.mkdir(subject_dir_path)
+    fpath = os.path.join(subject_dir_path, fname)
 
     with open(fpath, "w", encoding="utf-8") as handler:
         count = 0
