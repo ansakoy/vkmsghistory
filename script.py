@@ -4,7 +4,7 @@ from pathlib import Path
 
 import vk_api
 
-from secrets import PARTICIPANTS, PEER_ID, TOKEN
+from secrets import PARTICIPANTS, BASE_PEER_ID, TOKEN, CHAT_ID_XV, CHAT_ID_XX
 
 BASE_DIR = Path(__file__).resolve().parent
 DATA_DIR = os.path.join(BASE_DIR, "data")
@@ -53,7 +53,7 @@ def get_chunk_data(vk, peer_id, start_message_id, offset, count):
     return items, -chunk_length, -1
 
 
-def collect_history(title, peer_id=PEER_ID, token=TOKEN):
+def collect_history(title, peer_id, token=TOKEN):
     """Collect history from messenger"""
     vk_session = vk_api.VkApi(token=token)
 
@@ -70,7 +70,7 @@ def collect_history(title, peer_id=PEER_ID, token=TOKEN):
         step = 200
         while offset < 0:
             items, last_idx, idx = get_chunk_data(
-                vk=vk, peer_id=peer_id + 10, start_message_id=1, offset=offset, count=step,
+                vk=vk, peer_id=peer_id, start_message_id=1, offset=offset, count=step,
             )
             if items is None:
                 break
@@ -100,5 +100,5 @@ def collect_history(title, peer_id=PEER_ID, token=TOKEN):
         print(count)
 
 
-if __name__ == '__main__':
-    collect_history(token=TOKEN, title="vkmsghist")
+# if __name__ == '__main__':
+#     collect_history(token=TOKEN, title="vkmsghist")

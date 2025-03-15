@@ -1,4 +1,6 @@
 data/
 __pycache__/
+download_xx.py
+download_xv.py
 secrets.py
 venv/
